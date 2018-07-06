@@ -35,7 +35,9 @@ class CanCommand extends SiteCommand
             $this->log()->notice('You have no sites.');
         }
 
+        //site loop
         foreach ($sites as $key => $site) {
+            //remove non selected sites
             if (isset($options['level'])) {
                 $level = explode(",", $options['level']);
                 if (!in_array($site['service_level'], $level, true)) {
@@ -50,6 +52,7 @@ class CanCommand extends SiteCommand
                 }
             }
 
+            //set drush or wp
             $use = '';
             if ($options['drush']) {
                 $use = ' drush ';
@@ -57,9 +60,12 @@ class CanCommand extends SiteCommand
                 $use = ' wp ';
             }
       
-            //print output
+            //run
             if (isset($sites[$key])) {
+                //print site
                 echo $site['name']."\n";
+
+                //compile command
                 if (isset($options['command'])) {
                     echo "----------\n";
                     $query = "terminus ".$use.$site['name'].".".$options['env']." ".$options['command'];
@@ -67,6 +73,7 @@ class CanCommand extends SiteCommand
                     if ($output == '') {
                         $output = "** no results **\n";
                     }
+                    //print output
                     echo $output."\n";
                 }
             }
