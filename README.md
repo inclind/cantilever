@@ -7,7 +7,7 @@
 
 ## Installation
 
-* Place cantilever folder inside of ~/.terminus/plugins
+* Clone or copy cantilever inside of ~/.terminus/plugins
 * CanCommand.php must be executable to run
 
 ## Examples
