@@ -6,12 +6,11 @@ This plugin is designed to
 * search results of drush or wp-cli output *todo wp-cli support
 * provide organized report of operations on per site basis
 
-#Installation
+## Installation
+
 * Place cantilever folder inside of ~/.terminus/plugins
 * CanCommand.php must be executable to run
 
-#Example:
-**terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'**
+## Example:
 
-
-Created for Inclind, Inc. by Phil Everton
+```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'```
