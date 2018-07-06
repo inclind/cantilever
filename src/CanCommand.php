@@ -38,6 +38,7 @@ class CanCommand extends SiteCommand
         //site loop
         foreach ($sites as $key => $site) {
             //remove non selected sites
+            //todo:: refactor explode routine
             if (isset($options['level'])) {
                 $level = explode(",", $options['level']);
                 if (!in_array($site['service_level'], $level, true)) {
@@ -53,6 +54,7 @@ class CanCommand extends SiteCommand
             }
 
             //set drush or wp
+            //todo:: refactor drush/wp routine
             $use = '';
             if ($options['drush']) {
                 $use = ' drush ';
