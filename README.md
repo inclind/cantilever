@@ -11,6 +11,8 @@
 * Place cantilever folder inside of ~/.terminus/plugins
 * CanCommand.php must be executable to run
 
-## Example
+## Examples
 
-```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'```
+```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis' -d'```
+
+```terminus can --env=live --frame='wordpress' --command='option get home' -w```
