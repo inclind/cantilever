@@ -58,7 +58,7 @@ class CanCommand extends SiteCommand
 
                 //compile command
                 if (isset($options['command'])) {
-                    $options['command'] = str_replace("[site]",$site['name'].".".$options['env'],$options['command']);
+                    $options['command'] = str_replace("[site]", $site['name'].".".$options['env'], $options['command']);
 
                     echo "----------\n";
                     $query = $options['command'];
