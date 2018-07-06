@@ -14,8 +14,3 @@
 ## Example
 
 ```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'```
-
-## Todo
-* Add wp-cli support
-* Add flags for drush and wp-cli so all terminus commands can be run as well
-* Change all scripts to go through terminus with a flag to run a custom script outside of terminus
