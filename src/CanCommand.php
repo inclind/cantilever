@@ -16,10 +16,11 @@ class CanCommand extends SiteCommand
    * @option level Choose site service level (free,basic,pro,business,performance)
    * @option frame Choose site framework (drupal,drupal8,wordpress)
    * @option command Add commands after <site>.<env> (terminus <site>.<env> ...)
-   * @option drush use a drush command (terminus drush <site>.<env>)
-   * @option wp use a wp-cli command (terminus drush <site>.<env>)
+   * @option drush|d use a drush command (terminus drush <site>.<env>)
+   * @option wp|w use a wp-cli command (terminus drush <site>.<env>)
    *
-   * example: terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'
+   * terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis' -d
+   * terminus can --env=live --frame='wordpress' --command='option get home' -w
    *
    */
     public function cantilever($options = ['env' => 'dev', 'level' => null, 'frame' => 'drupal', 'command' => null])
@@ -48,13 +49,20 @@ class CanCommand extends SiteCommand
                     unset($sites[$key]);
                 }
             }
+
+            $use = '';
+            if ($options['drush']) {
+                $use = ' drush ';
+            } elseif ($options['wp']) {
+                $use = ' wp ';
+            }
       
             //print output
             if (isset($sites[$key])) {
                 echo $site['name']."\n";
                 if (isset($options['command'])) {
                     echo "----------\n";
-                    $query = "drush @".$site['name'].".".$options['env']." ".$options['command'];
+                    $query = "terminus ".$use.$site['name'].".".$options['env']." ".$options['command'];
                     $output = shell_exec($query);
                     if ($output == '') {
                         $output = "** no results **\n";
