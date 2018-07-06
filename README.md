@@ -20,3 +20,4 @@
 
 * refactor drush/wp logic
 * refactor explode routine for level/frame
+* add [site] placeholder for command and remove terminus assumption
