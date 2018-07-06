@@ -15,7 +15,7 @@ class CanCommand extends SiteCommand
    * @option env Choose site environment
    * @option level Choose site service level (free,basic,pro,business,performance)
    * @option frame Choose site framework (drupal,drupal8,wordpress)
-   * @option command Add command, using [site] to reference site)
+   * @option command Add your command (using [site] to reference site)
    *
    * terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='terminus drush [site] pml|grep redis'
    * terminus can --env=live --frame='wordpress' --command='terminus wp [site] option get home'
