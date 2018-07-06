@@ -12,6 +12,6 @@
 
 ## Examples
 
-```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis' -d'```
+```terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis' -d```
 
 ```terminus can --env=live --frame='wordpress' --command='option get home' -w```
