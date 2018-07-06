@@ -2,8 +2,7 @@
 
 * isolate environments by framework (drupal, drupal8, wordpress)
 * isolate enironments by service level (free, basic, pro, business, performance)
-* run drush and/or wp-cli commands on all isolated *todo wp-cli support
-* search results of drush or wp-cli output *todo wp-cli support
+* run drush and/or wp-cli commands
 * provide organized report of operations on per site basis
 
 ## Installation
