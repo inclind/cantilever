@@ -17,5 +17,5 @@
 
 ## Todo
 * Add wp-cli support
-* Add flags for drush and wp-cli so all terminus plugins can be run as well
+* Add flags for drush and wp-cli so all terminus commands can be run as well
 * Change all scripts to go through terminus with a flag to run a custom script outside of terminus
