@@ -12,14 +12,17 @@ class CanCommand extends SiteCommand
    *
    * @command can
    *
-   * @option env filter; Choose site environment
-   * @option level filter; Choose site service level (free,basic,pro,business,performance)
-   * @option frame filter; Choose site framework (drupal,drupal8,wordpress)
+   * @option env Choose site environment
+   * @option level Choose site service level (free,basic,pro,business,performance)
+   * @option frame Choose site framework (drupal,drupal8,wordpress)
+   * @option command Add commands after <site>.<env> (terminus <site>.<env> ...)
+   * @option drush use a drush command (terminus drush <site>.<env>)
+   * @option wp use a wp-cli command (terminus drush <site>.<env>)
    *
    * example: terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis'
    *
    */
-    public function cantilever($options = ['env' => 'dev', 'level' => null, 'frame' => null, 'command' => null])
+    public function cantilever($options = ['env' => 'dev', 'level' => null, 'frame' => 'drupal', 'command' => null])
     {
         //show initialize
         $this->log()->notice("Cantilever initializing...");
