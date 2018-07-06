@@ -15,12 +15,10 @@ class CanCommand extends SiteCommand
    * @option env Choose site environment
    * @option level Choose site service level (free,basic,pro,business,performance)
    * @option frame Choose site framework (drupal,drupal8,wordpress)
-   * @option command Add commands after <site>.<env> (terminus <site>.<env> ...)
-   * @option drush|d use a drush command (terminus drush <site>.<env>)
-   * @option wp|w use a wp-cli command (terminus drush <site>.<env>)
+   * @option command Add command, using [site] to reference site)
    *
-   * terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='pml|grep redis' -d
-   * terminus can --env=live --frame='wordpress' --command='option get home' -w
+   * terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='terminus drush [site] pml|grep redis'
+   * terminus can --env=live --frame='wordpress' --command='terminus wp [site] option get home'
    *
    */
     public function cantilever($options = ['env' => 'dev', 'level' => null, 'frame' => 'drupal', 'command' => null])
@@ -52,15 +50,6 @@ class CanCommand extends SiteCommand
                     unset($sites[$key]);
                 }
             }
-
-            //set drush or wp
-            //todo:: refactor drush/wp routine
-            $use = '';
-            if ($options['drush']) {
-                $use = ' drush ';
-            } elseif ($options['wp']) {
-                $use = ' wp ';
-            }
       
             //run
             if (isset($sites[$key])) {
@@ -69,12 +58,15 @@ class CanCommand extends SiteCommand
 
                 //compile command
                 if (isset($options['command'])) {
+                    $options['command'] = str_replace("[site]",$site['name'].".".$options['env'],$options['command']);
+
                     echo "----------\n";
-                    $query = "terminus ".$use.$site['name'].".".$options['env']." ".$options['command'];
+                    $query = $options['command'];
                     $output = shell_exec($query);
                     if ($output == '') {
                         $output = "** no results **\n";
                     }
+
                     //print output
                     echo $output."\n";
                 }
