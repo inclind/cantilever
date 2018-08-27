@@ -18,4 +18,6 @@
 
 ## TODO
 
-* refactor explode routine for level/frame
+* refactor explode routines to single function
+* add tags support
+* add organization tags support

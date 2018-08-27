@@ -15,6 +15,7 @@ class CanCommand extends SiteCommand
    * @option env Choose site environment
    * @option level Choose site service level (free,basic,pro,business,performance)
    * @option frame Choose site framework (drupal,drupal8,wordpress)
+   * @option tags Choose site tags (development,enterprise,terminated)
    * @option command Add your command (using [site] to reference site)
    *
    * terminus can --env=live --level='pro,business,performance' --frame='drupal,drupal8' --command='terminus drush [site] pml|grep redis'
@@ -50,11 +51,27 @@ class CanCommand extends SiteCommand
                     unset($sites[$key]);
                 }
             }
+
+		        if (isset($options['tags'])) {
+			        $frame = explode(",", $options['tags']);
+			        if (!in_array($site['tags'], $frame, true)) {
+				        unset($sites[$key]);
+			        }
+		        }
+
+            print_r($site);
       
             //run
             if (isset($sites[$key])) {
                 //print site
-                echo $site['name']."\n";
+                echo $site['name'];
+		            if (isset($options['env'])) {
+			            echo " / ".$options['env'];
+		            }
+		            echo "\n";
+		            if (isset($options['tags'])) {
+			            echo $site['tags'] . "\n";
+		            }
 
                 //compile command
                 if (isset($options['command'])) {
