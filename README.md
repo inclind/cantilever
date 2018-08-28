@@ -18,6 +18,4 @@
 
 ## TODO
 
-* refactor explode routines to single function
-* add tags support
-* add organization tags support
+* Add support for organization/membership tags
