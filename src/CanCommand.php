@@ -34,77 +34,76 @@ class CanCommand extends SiteCommand
         if (empty($sites)) {
             $this->log()->notice('You have no sites.');
         } else {
+            if (isset($options['env'])) {
+                echo "environment: " . $options['env']."\n";
+            }
+            if (isset($options['tags'])) {
+                echo "tags: " . $options['tags']."\n";
+            }
+            if (isset($options['org'])) {
+                echo "organization: " . $options['org']."\n";
+            }
+            if (isset($options['env']) || isset($options['tags']) || isset($options['org'])) {
+                echo "----------\n\n";
+            }
 
-		        if (isset($options['env'])) {
-			          echo "environment: " . $options['env']."\n";
-		        }
-		        if (isset($options['tags'])) {
-			          echo "tags: " . $options['tags']."\n";
-		        }
-		        if (isset($options['org'])) {
-			          echo "organization: " . $options['org']."\n";
-		        }
-		        if (isset($options['env']) || isset($options['tags']) || isset($options['org'])) {
-			          echo "----------\n\n";
-		        }
+            //site loop
+            foreach ($sites as $key => $site) {
+                //remove non selected sites
+                if (isset($options['level'])) {
+                    $level = explode(",", $options['level']);
+                    if (!in_array($site['service_level'], $level, true)) {
+                        unset($sites[$key]);
+                    }
+                }
 
-		        //site loop
-		        foreach ($sites as $key => $site) {
-				        //remove non selected sites
-				        if (isset($options['level'])) {
-						        $level = explode(",", $options['level']);
-						        if (!in_array($site['service_level'], $level, TRUE)) {
-							          unset($sites[$key]);
-						        }
-				        }
+                if (isset($options['frame'])) {
+                    $frame = explode(",", $options['frame']);
+                    if (!in_array($site['framework'], $frame, true)) {
+                        unset($sites[$key]);
+                    }
+                }
 
-				        if (isset($options['frame'])) {
-						        $frame = explode(",", $options['frame']);
-						        if (!in_array($site['framework'], $frame, TRUE)) {
-							          unset($sites[$key]);
-						        }
-				        }
+                if (isset($options['tags'])) {
+                    $tags = explode(",", $options['tags']);
+                    if (!isset($site['tags']) || (isset($site['tags']) && !in_array($site['tags'], $tags, true))) {
+                        unset($sites[$key]);
+                    }
+                }
 
-				        if (isset($options['tags'])) {
-						        $tags = explode(",", $options['tags']);
-						        if (!isset($site['tags']) || (isset($site['tags']) && !in_array($site['tags'], $tags, TRUE))) {
-							          unset($sites[$key]);
-						        }
-				        }
+                if (isset($options['org'])) {
+                    if (preg_match("/(\b" . $options['org'] . "\b)(\n|,|$)/", $site['memberships']) == false) {
+                        unset($sites[$key]);
+                    }
+                }
 
-				        if (isset($options['org'])) {
-						        if (preg_match("/(\b" . $options['org'] . "\b)(\n|,|$)/", $site['memberships']) == FALSE) {
-							          unset($sites[$key]);
-						        }
-				        }
+                //run
+                if (empty($sites)) {
+                    $this->log()->notice('You have no sites.');
+                } else {
+                    if (isset($sites[$key])) {
+                        //print site
+                        echo $site['name'] . "\n";
 
-				        //run
-				        if (empty($sites)) {
-					          $this->log()->notice('You have no sites.');
-				        } else {
-						        if (isset($sites[$key])) {
-								        //print site
-								        echo $site['name'] . "\n";
+                        //compile command
+                        if (isset($options['command'])) {
+                            $options['command'] = str_replace("[site]", $site['name'] . "." . $options['env'], $options['command']);
+                            $options['command'] = str_replace("[name]", $site['name'], $options['command']);
+                            $options['command'] = str_replace("[env]", $options['env'], $options['command']);
 
-								        //compile command
-								        if (isset($options['command'])) {
-										        $options['command'] = str_replace("[site]", $site['name'] . "." . $options['env'], $options['command']);
-										        $options['command'] = str_replace("[name]", $site['name'], $options['command']);
-										        $options['command'] = str_replace("[env]", $options['env'], $options['command']);
+                            echo "----------\n";
+                            $query = $options['command'];
+                            $output = shell_exec($query);
+                            if ($output == '') {
+                                $output = "** no results **\n";
+                            }
 
-										        echo "----------\n";
-										        $query = $options['command'];
-										        $output = shell_exec($query);
-										        if ($output == '') {
-											          $output = "** no results **\n";
-										        }
-
-										        //print output
-										        echo $output . "\n";
-								        }
-						        }
-				        }
-		        }
+                            //print output
+                            echo $output . "\n";
+                        }
+                    }
+                }
+            }
         }
     }
 }
