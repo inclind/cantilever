@@ -1,8 +1,8 @@
 ## Cantilever is designed to
 
 * isolate environments by framework (drupal, drupal8, wordpress)
-* isolate enironments by service level (free, basic, pro, business, performance)
-* run drush and/or wp-cli commands
+* isolate environments by service level (free, basic, pro, business, performance)
+* run drush and/or wp-cli commands, or really any commands at all
 * provide organized report of operations on per site basis
 
 ## Installation
