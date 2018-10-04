@@ -49,6 +49,8 @@ class CanCommand extends SiteCommand
 
             //site loop
             foreach ($sites as $key => $site) {
+//            	print_r($site);
+
                 //remove non selected sites
                 if (isset($options['level'])) {
                     $level = explode(",", $options['level']);
@@ -83,17 +85,17 @@ class CanCommand extends SiteCommand
                 } else {
                     if (isset($sites[$key])) {
                         //print site
-                        echo $site['name'] . "\n";
+	                      echo $site['name'] . "\n";
 
                         //compile command
                         if (isset($options['command'])) {
-                            $options['command'] = str_replace("[site]", $site['name'] . "." . $options['env'], $options['command']);
-                            $options['command'] = str_replace("[name]", $site['name'], $options['command']);
-                            $options['command'] = str_replace("[env]", $options['env'], $options['command']);
+                        	  $command = $options['command'];
+                            $command = str_replace("[site]", $site['name'] . "." . $options['env'], $command);
+                            $command = str_replace("[name]", $site['name'], $command);
+                            $command = str_replace("[env]", $options['env'], $command);
 
                             echo "----------\n";
-                            $query = $options['command'];
-                            $output = shell_exec($query);
+                            $output = shell_exec($command);
                             if ($output == '') {
                                 $output = "** no results **\n";
                             }
